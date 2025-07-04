@@ -3,7 +3,6 @@ package mapper
 import (
 	"jk-api/api/controllers/v1/dto"
 	"jk-api/internal/database/models"
-	"time"
 )
 
 func CreateProjectDtoToModel(dto *dto.CreateProjectDto) (*models.Project, error) {
@@ -11,22 +10,12 @@ func CreateProjectDtoToModel(dto *dto.CreateProjectDto) (*models.Project, error)
 		return nil, nil
 	}
 
-	startDate, err := time.Parse("2006-01-02", dto.StartDate)
-	if err != nil {
-		return nil, err
-	}
-
-	endDate, err := time.Parse("2006-01-02", dto.EndDate)
-	if err != nil {
-		return nil, err
-	}
-
 	data := &models.Project{
 		Nama:      dto.Nama,
 		Kode:      dto.Kode,
 		Deskripsi: dto.Deskripsi,
-		StartDate: startDate,
-		EndDate:   endDate,
+		StartDate: dto.StartDate,
+		EndDate:   dto.EndDate,
 	}
 
 	return data, nil
@@ -49,18 +38,10 @@ func UpdateProjectDtoToModel(dto *dto.UpdateProjectDto) (*models.Project, error)
 		data.Deskripsi = *dto.Deskripsi
 	}
 	if dto.StartDate != nil {
-		startDate, err := time.Parse("2006-01-02", *dto.StartDate)
-		if err != nil {
-			return nil, err
-		}
-		data.StartDate = startDate
+		data.StartDate = *dto.StartDate
 	}
 	if dto.EndDate != nil {
-		endDate, err := time.Parse("2006-01-02", *dto.EndDate)
-		if err != nil {
-			return nil, err
-		}
-		data.EndDate = endDate
+		data.EndDate = *dto.EndDate
 	}
 
 	return data, nil
