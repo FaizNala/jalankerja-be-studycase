@@ -2,10 +2,10 @@ package services
 
 import (
 	"errors"
+	"time"
 	"jk-api/internal/database/config"
 	"jk-api/internal/database/models"
 	"jk-api/pkg/repository/adapter/sql"
-
 	"gorm.io/gorm"
 )
 
@@ -65,10 +65,10 @@ func (s *projectService) UpdateProject(id int64, input *models.Project) (*models
 	if input.Deskripsi != "" {
 		existing.Deskripsi = input.Deskripsi
 	}
-	if !input.StartDate.IsZero() {
+	if input.StartDate != (time.Time{}) {
 		existing.StartDate = input.StartDate
 	}
-	if !input.EndDate.IsZero() {
+	if input.EndDate != (time.Time{}) {
 		existing.EndDate = input.EndDate
 	}
 
